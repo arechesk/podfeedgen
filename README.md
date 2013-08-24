@@ -11,7 +11,7 @@ Podfeedgen - это скрипт для генерации подкаст фид
 	
 ## Requirements
 1. OS X или Linux
-2. Python 2.7
+2. Python 3
 3. [PyRSS2Gen](https://pypi.python.org/pypi/PyRSS2Gen)
 4. [HandBrakeCLI](http://handbrake.fr/downloads2.php)
 
