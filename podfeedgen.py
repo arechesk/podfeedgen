@@ -5,7 +5,7 @@ import os
 import sys
 import datetime
 import convert
-from functools import reduce, cmp_to_key
+from functools import reduce
 from os import path
 
 
@@ -41,10 +41,9 @@ def esc(s):
     return s
 
 
-def _cmp(x, y):
+def _cmp(x):
     import re
-    pttrn = re.compile(r'.*?(\d+).*(.mp3|.m4v|.mp4|.mov)$')
-    return int(pttrn.findall(x)[0][0]) - int(pttrn.findall(y)[0][0])
+    return int(re.findall(r'.*?(\d+).*(.mp3|.m4v|.mp4|.mov)$',x)[0][0])
 
 
 dir = sys.argv[1]
@@ -60,7 +59,7 @@ if listDir:
     print(lm)
     listDir = reduce(lambda x, y: x + y, lm)
 files = list(filter(lambda x: path.splitext(x)[1] in [".mp3", ".m4v", '.mp4', ".mov"], listDir + os.listdir(dir)))
-files.sort(key=cmp_to_key(_cmp))
+files.sort(key=_cmp)
 myItems = [(rss.RSSItem(
     title=n,
     description='',
