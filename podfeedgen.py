@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 import PyRSS2Gen as rss
 import os
-from os import path
 import sys
 import datetime
-from functools import reduce
 import convert
+from functools import reduce, cmp_to_key
+from os import path
 
 
 def esc(s):
@@ -41,6 +41,12 @@ def esc(s):
     return s
 
 
+def _cmp(x, y):
+    import re
+    pttrn = re.compile(r'.*?(\d+).*(.mp3|.m4v|.mp4|.mov)$')
+    return int(pttrn.findall(x)[0][0]) - int(pttrn.findall(y)[0][0])
+
+
 dir = sys.argv[1]
 print(os.listdir(dir))
 url = sys.argv[2]
@@ -54,6 +60,7 @@ if listDir:
     print(lm)
     listDir = reduce(lambda x, y: x + y, lm)
 files = list(filter(lambda x: path.splitext(x)[1] in [".mp3", ".m4v", '.mp4', ".mov"], listDir + os.listdir(dir)))
+files.sort(key=cmp_to_key(_cmp))
 myItems = [(rss.RSSItem(
     title=n,
     description='',
@@ -67,7 +74,7 @@ feed = rss.RSS2(
     items=myItems
 )
 
-feed.write_xml(open((dir + '/' + path.basename(path.abspath(dir)) + ".xml"), "w"),"utf-8")
+feed.write_xml(open((dir + '/' + path.basename(path.abspath(dir)) + ".xml"), "w"), "utf-8")
 print(url + '/' + esc(path.basename(path.abspath(dir))) + ".xml")
 os.system('python -m SimpleHTTPServer 3000')
 os.chdir(myDir)
