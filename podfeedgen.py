@@ -43,7 +43,10 @@ def esc(s):
 
 def _cmp(x):
     import re
-    return int(re.findall(r'.*?(\d+).*(.mp3|.m4v|.mp4|.mov)$',x)[0][0])
+    if len(re.findall(r'.*?(\d+).*(.mp3|.m4v|.mp4|.mov)$',x))==0:
+        return 0
+    else:
+        return int(re.findall(r'.*?(\d+).*(.mp3|.m4v|.mp4|.mov)$',x)[0][0])
 
 
 dir = sys.argv[1]
