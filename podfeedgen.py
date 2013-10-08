@@ -68,6 +68,7 @@ myItems = [(rss.RSSItem(
     description='',
     enclosure=rss.Enclosure(url + '/' + esc(n), 0, "audio/mpeg")
 )) for n in files]
+myItems.reverse()
 feed = rss.RSS2(
     title=path.basename(path.abspath(dir)),
     link="http://unnotigkeit.ya.ru",
