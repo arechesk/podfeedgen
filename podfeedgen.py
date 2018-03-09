@@ -64,7 +64,7 @@ if listDir:
     lm = list(map(lambda x: list(map(lambda k: x + '/' + k, os.listdir(x))), listDir))
     print("lm:{}\n *********************".format(lm))
     listDir = reduce(lambda x, y: x + y, lm)
-files = list(filter(lambda x: path.splitext(x)[1] in [".mp3",".M4V", ".m4v", '.mp4',".MP4", ".mov"], listDir + os.listdir(dir)))
+files = list(filter(lambda x: path.splitext(x)[1] in [".MP3",".mp3",".M4V", ".m4v", '.mp4',".MP4", ".mov"], listDir + os.listdir(dir)))
 files.sort(key=_cmp)
 myItems = [(rss.RSSItem(
     title=n,
@@ -83,4 +83,4 @@ feed = rss.RSS2(
 feed.write_xml(open((dir + '/' + path.basename(path.abspath(dir)) + ".xml"), "w"), "utf-8")
 print(url+':'+str(port)+ '/' + esc(path.basename(path.abspath(dir))) + ".xml")
 import http.server
-os.system('python -m SimpleHTTPServer {}'.format(port))
+os.system('python -m http.server {}'.format(port))
