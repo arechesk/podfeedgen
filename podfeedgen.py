@@ -83,4 +83,4 @@ feed = rss.RSS2(
 feed.write_xml(open((dir + '/' + path.basename(path.abspath(dir)) + ".xml"), "w"), "utf-8")
 print(url+':'+str(port)+ '/' + esc(path.basename(path.abspath(dir))) + ".xml")
 import http.server
-os.system('python -m http.server {}'.format(port))
+os.system('python3 -m http.server {}'.format(port))
